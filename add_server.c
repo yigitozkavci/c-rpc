@@ -11,6 +11,28 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
+void write_to_file_i(int *val) {
+  FILE *f = fopen("file.txt", "w");
+  if (f == NULL)
+  {
+        printf("Error opening file!\n");
+            exit(1);
+  }
+  fprintf(f, "%d", *val);
+  fclose(f);
+}
+
+void write_to_file(const char* text) {
+  FILE *f = fopen("file.txt", "w");
+  if (f == NULL)
+  {
+        printf("Error opening file!\n");
+            exit(1);
+  }
+  fprintf(f, "%s", text);
+  fclose(f);
+}
+
 void child_proc() {
   execl("./ext_add", "ext_add", "", (char *) 0);
 }
@@ -26,6 +48,7 @@ void parent_proc(int a, int b, int* result) {
   char *result_ptr = strstr(raw_result, "Result: ");
   result_ptr+=8;
   *result = atoi(result_ptr);
+  write_to_file_i(result);
 }
 
 void sum_from_ext_program(int a, int b, int* result) {
@@ -69,6 +92,7 @@ void sum_from_ext_program(int a, int b, int* result) {
     char *result_ptr = strstr(raw_result, "Result: ");
     result_ptr+=8;
     *result = atoi(result_ptr);
+    write_to_file(raw_result);
     // *result = 6;
   }
 }

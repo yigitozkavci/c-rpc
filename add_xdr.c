@@ -6,14 +6,13 @@
 #include "add.h"
 
 bool_t
-xdr_intpair(xdrs, objp)
-	XDR *xdrs;
-	intpair *objp;
+xdr_intpair (XDR *xdrs, intpair *objp)
 {
+	register int32_t *buf;
 
-	if (!xdr_int(xdrs, &objp->a))
-		return (FALSE);
-	if (!xdr_int(xdrs, &objp->b))
-		return (FALSE);
-	return (TRUE);
+	 if (!xdr_int (xdrs, &objp->a))
+		 return FALSE;
+	 if (!xdr_int (xdrs, &objp->b))
+		 return FALSE;
+	return TRUE;
 }
